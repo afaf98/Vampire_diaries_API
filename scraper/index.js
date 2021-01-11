@@ -45,6 +45,7 @@ function getSeasons(tableSeasonElements) {
 
     seasons.push({ season: index + 1, episodes: episodes });
     console.log(seasons);
+    fs.writeFileSync("seasons.json", seasons);
   });
 }
 
