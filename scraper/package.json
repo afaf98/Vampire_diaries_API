@@ -1,0 +1,15 @@
+{
+  "name": "thevampirediares-api",
+  "version": "1.0.0",
+  "description": "The vampire Diaries Api",
+  "main": "../scraper/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Afaf Ibrahimi",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "jsdom": "^16.4.0"
+  }
+}
