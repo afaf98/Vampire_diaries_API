@@ -7,10 +7,19 @@ async function getHTMLCharacters() {
   const response = await axios(
     "https://en.wikipedia.org/wiki/List_of_The_Vampire_Diaries_characters"
   );
+  const tableCharacters = selectTable(response);
+  getActors(tableCharacters);
+}
+
+function selectTable(response) {
   const dom = new JSDOM(response.data);
   const tableCharacters = dom.window.document.querySelector(
     ".wikitable > tbody "
   );
+  return tableCharacters;
+}
+
+function getActors(tableCharacters) {
   const rowCount = Array.from(tableCharacters.rows);
   let actors = [];
   let previousActor = null;
@@ -41,7 +50,7 @@ async function getHTMLCharacters() {
       if (actorName.includes("[")) {
         actorName = actorName.substring(0, actorName.length - 3);
       }
-      console.log("3 rows", characters, actorName, actorRowSpan);
+      //   console.log("3 rows", characters, actorName, actorRowSpan);
       row = {
         character: characters,
         actor: actorName,
