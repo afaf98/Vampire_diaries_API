@@ -2,6 +2,7 @@ const fs = require("fs");
 const jsdom = require("jsdom");
 const axios = require("axios");
 const { JSDOM } = jsdom;
+const { getHTMLCharacters } = require("./characters");
 
 async function getHTML() {
   const response = await axios(
@@ -20,11 +21,10 @@ function getTablesSeasons(response) {
 
 function getSeasons(tableSeasonElements) {
   let seasons = Array.from(tableSeasonElements).map(parseTable);
-  console.log(seasons);
+  // console.log(seasons);
   fs.writeFileSync("seasons.json", JSON.stringify(seasons));
 }
 
-getHTML();
 function parseTable(season, index) {
   const rowCount = season.querySelectorAll("tr").length;
   let headers = [];
@@ -50,3 +50,6 @@ function parseTable(season, index) {
 
   return { season: index + 1, episodes: episodes };
 }
+
+getHTMLCharacters();
+getHTML();
