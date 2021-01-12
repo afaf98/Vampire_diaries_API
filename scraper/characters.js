@@ -63,6 +63,7 @@ function getActors(tableCharacters) {
     actors.push(row);
   });
   console.log("Actors", actors);
+  fs.writeFileSync("characters.json", JSON.stringify(actors));
 }
 
 module.exports = { getHTMLCharacters };
