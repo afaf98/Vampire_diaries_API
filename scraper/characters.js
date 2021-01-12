@@ -11,6 +11,49 @@ async function getHTMLCharacters() {
   const tableCharacters = dom.window.document.querySelector(
     ".wikitable > tbody "
   );
+  const rowCount = Array.from(tableCharacters.rows);
+  let actors = [];
+  let previousActor = null;
+  rowCount.forEach((character, rowIndex) => {
+    if (rowIndex == 0 || rowIndex == 1) {
+      return;
+    }
+    let row = {};
+    const cellCount = Array.from(character.cells);
+    const characters = cellCount[0].textContent.trim();
+    const actor = cellCount[1];
+    const episodeCount = parseInt(
+      cellCount[cellCount.length - 1].textContent.trim()
+    );
+
+    if (previousActor) {
+      console.log("Previous actor", previousActor);
+      row = {
+        character: characters,
+        actor: previousActor,
+        episodeCount: episodeCount,
+      };
+      previousActor = null;
+    } else {
+      const actorRowSpan = actor.rowSpan;
+
+      let actorName = actor.textContent.trim();
+      if (actorName.includes("[")) {
+        actorName = actorName.substring(0, actorName.length - 3);
+      }
+      console.log("3 rows", characters, actorName, actorRowSpan);
+      row = {
+        character: characters,
+        actor: actorName,
+        episodeCount: episodeCount,
+      };
+      if (actorRowSpan == 2) {
+        previousActor = actorName;
+      }
+    }
+    actors.push(row);
+  });
+  console.log("Actors", actors);
 }
 
 module.exports = { getHTMLCharacters };
