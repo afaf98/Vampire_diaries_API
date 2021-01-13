@@ -1,45 +1,48 @@
-'use strict';
+"use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('episodes', {
+    await queryInterface.createTable("episodes", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       nEpisode: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       directedBy: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       writtenBy: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       airDate: {
-        type: Sequelize.STRING
+        type: Sequelize.DATEONLY,
       },
       productionCode: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING,
       },
       USviewers: {
-        type: Sequelize.STRING
+        type: Sequelize.FLOAT,
+      },
+      nSeason: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('episodes');
-  }
+    await queryInterface.dropTable("episodes");
+  },
 };
