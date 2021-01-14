@@ -1,5 +1,6 @@
 "use strict";
 const seasons = require("../../scraper/seasons.json");
+const extractDate = require("extract-date");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -10,7 +11,7 @@ module.exports = {
           title: episode["Title"],
           directedBy: episode["Directed by"],
           writtenBy: episode["Written by"],
-          airDate: episode["Original air date"],
+          airDate: extractDate.default(episode["Original air date"])[0].date,
           productionCode: episode["Prod.code"],
           USviewers: parseFloat(
             episode["U.S. viewers(millions)"].substring(

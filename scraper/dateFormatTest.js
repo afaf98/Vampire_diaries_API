@@ -3,7 +3,7 @@ const extractDate = require("extract-date");
 const variables = "September 10, 2009 (2009-09-10)";
 
 // console.log(extractDate());
-console.log(extractDate.default(variables));
+console.log(extractDate.default(variables)[0].date);
 
 // extractDate("extracts date from anywhere within the input 2000-01-02");
 // // [{date: '2000-01-02'}]
