@@ -4,7 +4,12 @@
   "description": "Database Vampire Diaries API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:undo": " npx sequelize-cli db:migrate:undo:all",
+    "seed:all": "npx sequelize-cli db:seed:all",
+    "reseed": "npx sequelize-cli db:seed:undo:all && npm run seed:all",
+    "reset": "npm run migrate:undo && npm run migrate && npm run seed:all"
   },
   "author": "Afaf Ibrahimi",
   "license": "ISC",
