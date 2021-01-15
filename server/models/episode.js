@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       airDate: DataTypes.DATEONLY,
       productionCode: DataTypes.STRING,
       USviewers: DataTypes.FLOAT,
-      nSeason: DataTypes.STRING,
+      nSeason: DataTypes.INTEGER,
     },
     {
       sequelize,

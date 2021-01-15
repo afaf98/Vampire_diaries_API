@@ -30,7 +30,7 @@ module.exports = {
         type: Sequelize.FLOAT,
       },
       nSeason: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

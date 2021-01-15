@@ -3,6 +3,7 @@ const jsdom = require("jsdom");
 const axios = require("axios");
 const { JSDOM } = jsdom;
 const { getHTMLCharacters } = require("./characters");
+const extractDate = require("extract-date");
 
 async function getHTML() {
   const response = await axios(
@@ -22,7 +23,32 @@ function getTablesSeasons(response) {
 function getSeasons(tableSeasonElements) {
   let seasons = Array.from(tableSeasonElements).map(parseTable);
   // console.log(seasons);
-  fs.writeFileSync("seasons.json", JSON.stringify(seasons));
+  // JSON.stringify(seasons);
+  const episodes = seasons.map((season) => {
+    return season.episodes.map((episode) => {
+      if (episode["No."]) {
+        return;
+      } else {
+        return {
+          nEpisode: parseInt(episode["No.overall"]),
+          title: episode["Title"],
+          directedBy: episode["Directed by"],
+          writtenBy: episode["Written by"],
+          airDate: extractDate.default(episode["Original air date"])[0].date,
+          productionCode: episode["Prod.code"],
+          USviewers: parseFloat(
+            episode["U.S. viewers(millions)"].substring(
+              0,
+              episode["U.S. viewers(millions)"].indexOf("[")
+            )
+          ),
+          nSeason: parseInt(episode["No. inseason"]),
+        };
+      }
+    });
+  });
+  console.log("Seasons", episodes);
+  fs.writeFileSync("seasons.json", JSON.stringify(episodes));
 }
 
 function parseTable(season, index) {
