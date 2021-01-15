@@ -1,23 +1,24 @@
 "use strict";
 const seasons = require("../../scraper/seasons.json");
-const extractDate = require("extract-date");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const allSeasons = seasons.map((season) => {
-      console.log("Season", season);
+    const allSeasons = seasons.map((season, index) => {
+      // console.log("Season", season);
       return season.map((episode) => {
         return {
           ...episode,
+          seasonId: index + 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         };
       });
     });
-    console.log("episodes", allSeasons.length);
+    // console.log("episodes", allSeasons.length);
     const allEpisodes = allSeasons.reduce((accumulator, season) => {
       return accumulator.concat(season);
     }, []);
+
     await queryInterface.bulkInsert("episodes", allEpisodes, {});
   },
 
