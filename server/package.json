@@ -9,11 +9,14 @@
     "migrate:undo": " npx sequelize-cli db:migrate:undo:all",
     "seed:all": "npx sequelize-cli db:seed:all",
     "reseed": "npx sequelize-cli db:seed:undo:all && npm run seed:all",
-    "reset": "npm run migrate:undo && npm run migrate && npm run seed:all"
+    "reset": "npm run migrate:undo && npm run migrate && npm run seed:all",
+    "start": "node index.js",
+    "dev": "npx nodemon index.js"
   },
   "author": "Afaf Ibrahimi",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "extract-date": "^2.8.2",
     "pg": "^8.5.1",
