@@ -5,7 +5,6 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const allSeasons = seasons.map((season, index) => {
       return {
-        // nseason: index + 1,
         createdAt: new Date(),
         updatedAt: new Date(),
       };

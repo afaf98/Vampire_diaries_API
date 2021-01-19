@@ -31,6 +31,5 @@ module.exports = {
       },
       {}
     );
-    // await queryInterface.removeConstraint("episodes", "episodes_nSeason_fkey");
   },
 };

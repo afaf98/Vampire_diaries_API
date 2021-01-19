@@ -4,7 +4,6 @@ const seasons = require("../../scraper/seasons.json");
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const allSeasons = seasons.map((season, index) => {
-      // console.log("Season", season);
       return season.map((episode) => {
         return {
           ...episode,
@@ -14,7 +13,6 @@ module.exports = {
         };
       });
     });
-    // console.log("episodes", allSeasons.length);
     const allEpisodes = allSeasons.reduce((accumulator, season) => {
       return accumulator.concat(season);
     }, []);
