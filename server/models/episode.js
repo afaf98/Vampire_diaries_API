@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // episode.hasOne(model.season);
-      // episode.belongsTo(model.season);
+      episode.belongsTo(model.season);
     }
   }
   episode.init(
