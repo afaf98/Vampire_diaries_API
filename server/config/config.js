@@ -13,10 +13,7 @@ module.exports = {
     dialect: "mysql",
   },
   production: {
-    username: "root",
-    password: null,
-    database: "database_production",
-    host: "127.0.0.1",
+    use_env_variable: "PRODUCTION_DATABASE_URL",
     dialect: "mysql",
   },
 };
