@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
+    "extract-date": "^2.8.2",
     "jsdom": "^16.4.0"
   }
 }
