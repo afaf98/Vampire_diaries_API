@@ -11,8 +11,7 @@
     "reseed": "npx sequelize-cli db:seed:undo:all && npm run seed:all",
     "reset": "npm run migrate:undo && npm run migrate && npm run seed:all",
     "start": "node index.js",
-    "dev": "npx nodemon index.js",
-    "heroku-postbuild": "npm run migrate && npm run seed:all"
+    "dev": "npx nodemon index.js"
   },
   "author": "Afaf Ibrahimi",
   "license": "ISC",
