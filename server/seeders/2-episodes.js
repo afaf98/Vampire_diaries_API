@@ -1,5 +1,5 @@
 "use strict";
-const seasons = require("../../scraper/seasons.json");
+const seasons = require("../data/characters.json");
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
