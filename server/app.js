@@ -23,4 +23,10 @@ app.get("/seasons/:seasonId/episodes", async (req, res) => {
   res.json(episodes);
 });
 
+app.get("/episodes/:id", async (req, res) => {
+  const episodeById = await episode.findByPk(req.params.id);
+
+  res.json(episodeById);
+});
+
 module.exports = app;
