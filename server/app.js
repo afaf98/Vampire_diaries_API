@@ -4,9 +4,6 @@ const app = express();
 const cors = require("cors");
 const { episode, season } = require("./models");
 
-const cors = require("cors");
-const { episode, season } = require("./models");
-
 app.use(cors());
 
 app.get("/episodes", async (req, res) => {
@@ -27,4 +24,4 @@ app.get("/seasons/:seasonId/episodes", async (req, res) => {
   res.json(episodes);
 });
 
-module.export = app;
+module.exports = app;

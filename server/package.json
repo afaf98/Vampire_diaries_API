@@ -4,7 +4,9 @@
   "description": "Database Vampire Diaries API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run setup:db:test && npx jest --detectOpenHandles --runInBand",
+    "test:watch": "npm run setup:db:test && npx jest --runInBand --watch",
+    "setup:db:test": "NODE_ENV=test npm run migrate:undo && NODE_ENV=test npm run migrate",
     "migrate": "npx sequelize-cli db:migrate",
     "migrate:undo": " npx sequelize-cli db:migrate:undo:all",
     "seed:all": "npx sequelize-cli db:seed:all",
