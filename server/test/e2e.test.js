@@ -78,6 +78,16 @@ describe("GET /episodes", () => {
       expect(response.body[0].title).toBe("Pilot");
       done();
     });
+
+    test("should GET episode by id", async (done) => {
+      const response = await server.get("/episodes/4");
+
+      expect(response.status).toBe(200);
+      expect(response.body.id).toBe(4);
+      expect(response.body.title).toBe("Family Ties");
+
+      done();
+    });
   });
   describe("query seasons", () => {
     beforeAll(async () => {
@@ -132,8 +142,8 @@ describe("GET /episodes", () => {
       const response = await server.get("/seasons");
 
       expect(response.status).toBe(200);
-      expect(response.body.length).toBe(8);
-      expect(response.body[0].id).toBe(1);
+      expect(response.body.count).toBe(8);
+      expect(response.body.seasons[0].id).toBe(1);
       done();
     });
   });

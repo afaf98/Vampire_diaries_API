@@ -12,8 +12,8 @@ app.get("/episodes", async (req, res) => {
 });
 
 app.get("/seasons", async (req, res) => {
-  const seasons = await season.findAll();
-  res.json(seasons);
+  const seasons = await season.findAndCountAll();
+  res.json({ count: seasons.count, seasons: seasons.rows });
 });
 
 app.get("/seasons/:seasonId/episodes", async (req, res) => {
@@ -21,6 +21,12 @@ app.get("/seasons/:seasonId/episodes", async (req, res) => {
     where: { seasonId: req.params.seasonId },
   });
   res.json(episodes);
+});
+
+app.get("/episodes/:id", async (req, res) => {
+  const episodeById = await episode.findByPk(req.params.id);
+
+  res.json(episodeById);
 });
 
 module.exports = app;
