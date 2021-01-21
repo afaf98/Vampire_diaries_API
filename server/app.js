@@ -17,7 +17,6 @@ app.get("/seasons", async (req, res) => {
 });
 
 app.get("/seasons/:seasonId/episodes", async (req, res) => {
-  console.log("params", req.params);
   const episodes = await episode.findAll({
     where: { seasonId: req.params.seasonId },
   });
