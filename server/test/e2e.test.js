@@ -265,4 +265,84 @@ describe("GET /episodes", () => {
       done();
     });
   });
+  describe("queries characters", () => {
+    beforeAll(async () => {
+      await db.Characters.destroy({ truncate: true, cascade: true });
+
+      const characterTestData = [
+        {
+          id: 1,
+          character: "Elena Gilbert",
+          actor: "Nina Dobrev",
+          episodeCount: 134,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: 2,
+          character: "Katherine Pierce",
+          actor: "Nina Dobrev",
+          episodeCount: 109,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: 3,
+          character: "Stefan Salvatore",
+          actor: "Paul Wesley",
+          episodeCount: 171,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: 4,
+          character: "Silas",
+          actor: "Paul Wesley",
+          episodeCount: 16,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ];
+      await db.Characters.bulkCreate(characterTestData);
+    });
+
+    test("should GET all Characters ", async (done) => {
+      const response = await server.get("/characters");
+
+      expect(response.status).toBe(200);
+      expect(response.body.length).toBe(4);
+      expect(response.body[0].character).toBe("Elena Gilbert");
+      done();
+    });
+
+    test("should GET all actors ", async (done) => {
+      const response = await server.get("/actors");
+
+      expect(response.status).toBe(200);
+      expect(response.body.length).toBe(4);
+      expect(response.body[0].actor).toBe("Nina Dobrev");
+      done();
+    });
+
+    test("should GET all episodeCount ", async (done) => {
+      const response = await server.get("/actors/episodeCount");
+
+      expect(response.status).toBe(200);
+      expect(response.body.length).toBe(4);
+      expect(response.body[0].episodeCount).toBe(134);
+      done();
+    });
+
+    test("should GET all characters table ", async (done) => {
+      const response = await server.get("/characters/actors/episodeCount");
+
+      expect(response.status).toBe(200);
+      expect(response.body.length).toBe(4);
+      expect(response.body[0].character).toBe("Elena Gilbert");
+      expect(response.body[0].actor).toBe("Nina Dobrev");
+      expect(response.body[0].episodeCount).toBe(134);
+
+      done();
+    });
+  });
 });
