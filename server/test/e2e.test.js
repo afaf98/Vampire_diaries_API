@@ -327,26 +327,5 @@ describe("GET /episodes", () => {
       expect(response.body[0].actor).toBe("Nina Dobrev");
       done();
     });
-
-    test("should GET all episodeCount ", async (done) => {
-      const response = await server.get("/actors/episodeCount");
-
-      expect(response.status).toBe(200);
-      expect(response.body.length).toBe(4);
-      expect(response.body[0].episodeCount).toBe(134);
-      done();
-    });
-
-    test("should GET all characters table ", async (done) => {
-      const response = await server.get("/characters/actors/episodeCount");
-
-      expect(response.status).toBe(200);
-      expect(response.body.length).toBe(4);
-      expect(response.body[0].character).toBe("Elena Gilbert");
-      expect(response.body[0].actor).toBe("Nina Dobrev");
-      expect(response.body[0].episodeCount).toBe(134);
-
-      done();
-    });
   });
 });
