@@ -8,6 +8,7 @@ describe("GET /episodes", () => {
   afterAll(async () => {
     await db.sequelize.close();
   });
+
   describe("query for episode", () => {
     beforeAll(async () => {
       await db.episode.destroy({ truncate: true, cascade: true });
@@ -89,6 +90,7 @@ describe("GET /episodes", () => {
       done();
     });
   });
+
   describe("query seasons", () => {
     beforeAll(async () => {
       await db.season.destroy({ truncate: true, cascade: true });
@@ -147,6 +149,7 @@ describe("GET /episodes", () => {
       done();
     });
   });
+
   describe("queries for seasons and episodes", () => {
     beforeAll(async () => {
       await db.episode.destroy({ truncate: true, cascade: true });
@@ -265,9 +268,10 @@ describe("GET /episodes", () => {
       done();
     });
   });
+
   describe("queries characters", () => {
     beforeAll(async () => {
-      await db.Characters.destroy({ truncate: true, cascade: true });
+      await db.character.destroy({ truncate: true, cascade: true });
 
       const characterTestData = [
         {
@@ -303,7 +307,7 @@ describe("GET /episodes", () => {
           updatedAt: new Date(),
         },
       ];
-      await db.Characters.bulkCreate(characterTestData);
+      await db.character.bulkCreate(characterTestData);
     });
 
     test("should GET all Characters ", async (done) => {

@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 const cors = require("cors");
-const { Characters, episode, season } = require("./models");
+const { character, episode, season } = require("./models");
 
 app.use(cors());
 
@@ -35,19 +35,19 @@ app.get("/seasons/:seasonId/episodes", async (req, res) => {
 //Characters routes
 
 app.get("/characters", async (req, res) => {
-  const characters = await Characters.findAll({ attributes: ["character"] });
-  console.log("characters", characters);
+  const characters = await character.findAll({ attributes: ["character"] });
+
   res.json(characters);
 });
 
 app.get("/actors", async (req, res) => {
-  const actors = await Characters.findAll({ attributes: ["actor"] });
+  const actors = await character.findAll({ attributes: ["actor"] });
 
   res.json(actors);
 });
 
 app.get("/actors/episodeCount", async (req, res) => {
-  const actors = await Characters.findAll({
+  const actors = await character.findAll({
     attributes: ["actor", "episodeCount"],
   });
 
@@ -55,7 +55,7 @@ app.get("/actors/episodeCount", async (req, res) => {
 });
 
 app.get("/characters/actors/episodeCount", async (req, res) => {
-  const allCharacters = await Characters.findAll();
+  const allCharacters = await character.findAll();
 
   res.json(allCharacters);
 });

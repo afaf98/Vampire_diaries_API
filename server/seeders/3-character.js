@@ -14,10 +14,10 @@ module.exports = {
       };
     });
 
-    await queryInterface.bulkInsert("Characters", allCharacters, {});
+    await queryInterface.bulkInsert("characters", allCharacters, {});
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete("Characters", null, {});
+    await queryInterface.bulkDelete("characters", null, {});
   },
 };
