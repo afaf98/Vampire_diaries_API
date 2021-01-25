@@ -12,7 +12,9 @@ app.use(cors());
 
 app.get("/episodes", async (req, res) => {
   try {
-    const episodes = await episode.findAll();
+    limit = req.query.limit || 20;
+    offset = req.query.offset || 0;
+    const episodes = await episode.findAll({ offset: offset, limit: limit });
     res.json(episodes);
   } catch (error) {
     console.error(error);
