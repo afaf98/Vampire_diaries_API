@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const yup = require("yup");
+const validateParams = require("./validation/validationParams");
 
 const cors = require("cors");
 const { character, episode, season } = require("./models");
@@ -18,16 +20,23 @@ app.get("/episodes", async (req, res) => {
   }
 });
 
-app.get("/episodes/:id", async (req, res) => {
-  try {
-    const episodeById = await episode.findByPk(req.params.id);
+app.get(
+  "/episodes/:id",
+  validateParams(
+    yup.object().shape({ id: yup.number().required().positive().integer() })
+  ),
+  async (req, res) => {
+    const { id } = req.validParams;
+    try {
+      const episodeById = await episode.findByPk(id);
 
-    res.json(episodeById);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal error" });
+      res.json(episodeById);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal error" });
+    }
   }
-});
+);
 
 //Season routes
 app.get("/seasons", async (req, res) => {
@@ -41,17 +50,25 @@ app.get("/seasons", async (req, res) => {
   }
 });
 
-app.get("/seasons/:seasonId/episodes", async (req, res) => {
-  try {
-    const episodes = await episode.findAll({
-      where: { seasonId: req.params.seasonId },
-    });
-    res.json(episodes);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal error" });
+app.get(
+  "/seasons/:seasonId/episodes",
+  validateParams(
+    yup
+      .object()
+      .shape({ seasonId: yup.number().required().positive().integer() })
+  ),
+  async (req, res) => {
+    try {
+      const episodes = await episode.findAll({
+        where: { ...req.validParams },
+      });
+      res.json(episodes);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal error" });
+    }
   }
-});
+);
 
 //Characters routes
 
