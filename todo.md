@@ -5,8 +5,8 @@
 - [x] Add validation to limit and offset
 - [x] same validation function for queries and params
 - [x] GET /episodes?title=pilot // -> title.includes(pilot) but sequelize
-
-Future ideas
+- [x] Write proper test for the /episodes route
+      Future ideas
 
 GET /episodes?sortBy=USviewers
 GET /season/:id/episode/:nSeason
