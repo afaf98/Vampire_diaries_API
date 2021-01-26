@@ -10,25 +10,35 @@ app.use(cors());
 
 // Episode routes
 
-app.get("/episodes", async (req, res) => {
-  try {
-    limit = req.query.limit || 20;
-    offset = req.query.offset || 0;
-    const episodes = await episode.findAll({ offset: offset, limit: limit });
-    res.json(episodes);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal error" });
+app.get(
+  "/episodes",
+  validateParams(
+    yup.object().shape({
+      limit: yup.number().integer().min(1).default(20),
+      offset: yup.number().integer().min(0).default(0),
+    }),
+    "query"
+  ),
+  async (req, res) => {
+    const { limit, offset } = req.validatedQuery;
+    try {
+      const episodes = await episode.findAll({ offset: offset, limit: limit });
+      res.json(episodes);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal error" });
+    }
   }
-});
+);
 
 app.get(
   "/episodes/:id",
   validateParams(
-    yup.object().shape({ id: yup.number().required().positive().integer() })
+    yup.object().shape({ id: yup.number().required().positive().integer() }),
+    "params"
   ),
   async (req, res) => {
-    const { id } = req.validParams;
+    const { id } = req.validatedParams;
     try {
       const episodeById = await episode.findByPk(id);
 
@@ -57,12 +67,13 @@ app.get(
   validateParams(
     yup
       .object()
-      .shape({ seasonId: yup.number().required().positive().integer() })
+      .shape({ seasonId: yup.number().required().positive().integer() }),
+    "params"
   ),
   async (req, res) => {
     try {
       const episodes = await episode.findAll({
-        where: { ...req.validParams },
+        where: { ...req.validatedParams },
       });
       res.json(episodes);
     } catch (error) {
