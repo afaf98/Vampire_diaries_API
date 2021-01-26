@@ -16,13 +16,18 @@ app.get(
     yup.object().shape({
       limit: yup.number().integer().min(1).default(20),
       offset: yup.number().integer().min(0).default(0),
+      title: yup.string(),
     }),
     "query"
   ),
   async (req, res) => {
-    const { limit, offset } = req.validatedQuery;
+    const { limit, offset, ...validatedQuery } = req.validatedQuery;
     try {
-      const episodes = await episode.findAll({ offset: offset, limit: limit });
+      const episodes = await episode.findAll({
+        offset: offset,
+        limit: limit,
+        where: { ...validatedQuery },
+      });
       res.json(episodes);
     } catch (error) {
       console.error(error);
