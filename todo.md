@@ -4,9 +4,12 @@
 - [x] Simplify to just /characters (characters & actors) or actors (name / episode count)
 - [x] Add validation to limit and offset
 - [x] same validation function for queries and params
-- [x] GET /episodes?title=pilot // -> title.includes(pilot) but sequelize
+- [x] GET /episodes?title=pilot
 - [x] Write proper test for the /episodes route
-      Future ideas
+- [x] GET /episodes?sortBy=USviewers
+- [ ] Check if the user insert the right query
 
-GET /episodes?sortBy=USviewers
+Future ideas
+
+// -> title.includes(pilot) but sequelize
 GET /season/:id/episode/:nSeason
