@@ -89,6 +89,35 @@ describe("GET /episodes", () => {
 
       done();
     });
+    test("should GET one episode by directedBy authors", async (done) => {
+      const response = await server.get("/episodes?directedBy=Guy Ferland");
+
+      expect(response.status).toBe(200);
+      expect(response.body.length).toBe(1);
+      expect(response.body[0].title).toEqual("Family Ties");
+
+      done();
+    });
+
+    test("should GET one episode in base of the title", async (done) => {
+      const response = await server.get("/episodes?title=Pilot");
+
+      expect(response.status).toBe(200);
+      expect(response.body.length).toBe(1);
+      expect(response.body[0].title).toEqual("Pilot");
+
+      done();
+    });
+
+    test("should GET one episode in base of productionCode ", async (done) => {
+      const response = await server.get("/episodes?productionCode=2J5002");
+
+      expect(response.status).toBe(200);
+      expect(response.body.length).toBe(1);
+      expect(response.body[0].title).toEqual("Friday Night Bites");
+
+      done();
+    });
   });
 
   describe("query seasons", () => {
