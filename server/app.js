@@ -5,8 +5,14 @@ const validateParams = require("./validation/validationParams");
 
 const cors = require("cors");
 const { character, episode, season } = require("./models");
+const sendEmail = require("./sendEmail");
 
 app.use(cors());
+
+app.get("/user", (req, res) => {
+  sendEmail("afaf.ibrahimi@gmail.com");
+  res.send("Hellooo");
+});
 
 // Episode routes
 
