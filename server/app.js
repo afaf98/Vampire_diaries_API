@@ -1,18 +1,39 @@
 const express = require("express");
 const app = express();
 const yup = require("yup");
+const { v4 } = require("uuid");
 const validateParams = require("./validation/validationParams");
 
 const cors = require("cors");
 const { character, episode, season } = require("./models");
 const sendEmail = require("./sendEmail");
 
+app.use(express.json());
+
 app.use(cors());
 
-app.get("/user", (req, res) => {
-  sendEmail("afaf.ibrahimi@gmail.com");
-  res.send("Hellooo");
-});
+app.post(
+  "/user",
+  validateParams(
+    yup.object().shape({
+      email: yup.string().email(),
+    }),
+    "body"
+  ),
+  (req, res) => {
+    try {
+      const { email } = req.validatedBody;
+      const apiKey = v4();
+
+      sendEmail(email, apiKey);
+
+      res.send("Hellooo");
+    } catch (error) {
+      console.error("Error", error);
+      res.status(500).json({ message: "Internal error" });
+    }
+  }
+);
 
 // Episode routes
 

@@ -1,10 +1,9 @@
 const { send } = require("@sendgrid/mail");
 const sgMail = require("@sendgrid/mail");
-const { v4 } = require("uuid");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-function sendEmail(email) {
+function sendEmail(email, apiKey) {
   const apiKey = createApiKey();
   const msg = {
     to: `${email}`,
@@ -37,12 +36,6 @@ function sendEmail(email) {
       }
     }
   })();
-}
-
-function createApiKey() {
-  const apiKey = v4();
-  console.log("api", apiKey);
-  return apiKey;
 }
 
 module.exports = sendEmail;

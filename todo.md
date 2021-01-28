@@ -8,6 +8,11 @@
 - [x] Write proper test for the /episodes route
 - [x] GET /episodes?sortBy=USviewers
 - [ ] Check if the user insert the right query
+- [x] Install httpie
+- [ ] Post request to /user with email
+- [ ] Validate email
+- [ ] Create table user
+- [ ] Insert User
 
 Future ideas
 
