@@ -4,7 +4,6 @@ const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 function sendEmail(email, apiKey) {
-  const apiKey = createApiKey();
   const msg = {
     to: `${email}`,
     from: "vampire.diariesapi@gmail.com",

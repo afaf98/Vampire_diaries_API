@@ -5,7 +5,7 @@ const { v4 } = require("uuid");
 const validateParams = require("./validation/validationParams");
 
 const cors = require("cors");
-const { character, episode, season } = require("./models");
+const { character, episode, season, user } = require("./models");
 const sendEmail = require("./sendEmail");
 
 app.use(express.json());
@@ -20,17 +20,26 @@ app.post(
     }),
     "body"
   ),
-  (req, res) => {
+  async (req, res) => {
     try {
       const { email } = req.validatedBody;
       const apiKey = v4();
+      const [allUsers, newUser] = await user.findOrCreate({
+        where: { email: email },
+        defaults: { key: apiKey },
+      });
 
-      sendEmail(email, apiKey);
-
-      res.send("Hellooo");
+      if (newUser) {
+        sendEmail(email, apiKey);
+        return res
+          .status(201)
+          .json({ message: "Your key has been just sent by email!" });
+      } else {
+        return res.status(409).json({ message: "You already have a key" });
+      }
     } catch (error) {
       console.error("Error", error);
-      res.status(500).json({ message: "Internal error" });
+      res.status(500).json({ message: "Internal error", errors: error });
     }
   }
 );
