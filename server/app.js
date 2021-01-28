@@ -12,6 +12,16 @@ app.use(express.json());
 
 app.use(cors());
 
+async function apiKeyMidleware(req, res, next) {
+  const { key } = req.validatedQuery;
+  delete req.query.key;
+  const isValid = await user.findOne({ where: { key: key } });
+  if (!isValid) {
+    return res.status(403).json({ message: "You need a valid key" });
+  }
+  next();
+}
+
 app.post(
   "/user",
   validateParams(
@@ -58,9 +68,11 @@ app.get(
         .oneOf(["USviewers", "productionCode", "id"])
         .default("id"),
       sortOrder: yup.string().uppercase().oneOf(["ASC", "DESC"]).default("ASC"),
+      key: yup.string().required(),
     }),
     "query"
   ),
+  apiKeyMidleware,
   async (req, res) => {
     const {
       limit,
@@ -69,7 +81,6 @@ app.get(
       sortOrder,
       ...validatedQuery
     } = req.validatedQuery;
-    console.log("validateQuery", validatedQuery);
     try {
       const episodes = await episode.findAll({
         offset: offset,
