@@ -14,6 +14,7 @@ describe("api", () => {
       await db.episode.destroy({ truncate: true, cascade: true });
       await db.season.destroy({ truncate: true, cascade: true });
       await db.character.destroy({ truncate: true, cascade: true });
+      await db.user.destroy({ truncate: true, cascade: true });
 
       const episodesTestData = [
         {
@@ -154,7 +155,7 @@ describe("api", () => {
       await db.character.bulkCreate(characterTestData);
       await db.season.bulkCreate(seasonsTestData);
       await db.episode.bulkCreate(episodesTestData);
-      await db.user.bulkCreate(userTest);
+      await db.user.create(userTest);
     });
     test("should refuse request without apikey ", async (done) => {
       const response = await server.get("/episodes");
@@ -166,6 +167,14 @@ describe("api", () => {
       const response = await server.get("/episodes?key=blabla");
 
       expect(response.status).toBe(403);
+      done();
+    });
+    test("should accept request with a valid key ", async (done) => {
+      const response = await server.get(
+        "/episodes?key=534d9e33-f4df-4e3c-af0c-f3ec8abccc36"
+      );
+
+      expect(response.status).toBe(200);
       done();
     });
   });

@@ -15,11 +15,18 @@ app.use(cors());
 async function apiKeyMidleware(req, res, next) {
   const { key } = req.validatedQuery;
   delete req.query.key;
-  const isValid = await user.findOne({ where: { key: key } });
-  if (!isValid) {
-    return res.status(403).json({ message: "You need a valid key" });
+  try {
+    const isValid = await user.findOne({ where: { key: key } });
+
+    if (isValid === null) {
+      return res.status(403).json({ message: "You need a valid key" });
+    } else {
+      next();
+      return true;
+    }
+  } catch (error) {
+    console.log("Error", error);
   }
-  next();
 }
 
 app.post(
@@ -79,6 +86,7 @@ app.get(
       offset,
       sortBy,
       sortOrder,
+      key,
       ...validatedQuery
     } = req.validatedQuery;
     try {
