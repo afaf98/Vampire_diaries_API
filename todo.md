@@ -13,6 +13,7 @@
 - [x] Validate email
 - [x] Create table user
 - [x] Insert User
+- [X] MAKE SURE THE TEST WORKS
 
 Future ideas
 
