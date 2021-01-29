@@ -28,3 +28,5 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: end 2 end tests
         run: cd server && npm install && npm run test
+        env:
+          TEST_DATABASE_URL: ${{secrets.TEST_DATABASE_URL}}
