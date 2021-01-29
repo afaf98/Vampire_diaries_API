@@ -4,7 +4,7 @@ const db = require("../models");
 
 const server = request(app);
 
-describe.skip("GET /episodes", () => {
+describe("GET /episodes", () => {
   afterAll(async () => {
     await db.sequelize.close();
   });
@@ -72,7 +72,9 @@ describe.skip("GET /episodes", () => {
     });
 
     test("should GET all episodes", async (done) => {
-      const response = await server.get("/episodes");
+      const response = await server.get(
+        "/api/episodes?key=534d9e33-f4df-4e3c-af0c-f3ec8abccc36"
+      );
 
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(4);
@@ -81,7 +83,9 @@ describe.skip("GET /episodes", () => {
     });
 
     test("should GET episode by id", async (done) => {
-      const response = await server.get("/episodes/4");
+      const response = await server.get(
+        "/api/episodes/4?key=534d9e33-f4df-4e3c-af0c-f3ec8abccc36"
+      );
 
       expect(response.status).toBe(200);
       expect(response.body.id).toBe(4);
@@ -90,7 +94,9 @@ describe.skip("GET /episodes", () => {
       done();
     });
     test("should GET one episode by directedBy authors", async (done) => {
-      const response = await server.get("/episodes?directedBy=Guy Ferland");
+      const response = await server.get(
+        "/api/episodes?directedBy=Guy Ferland&&key=534d9e33-f4df-4e3c-af0c-f3ec8abccc36"
+      );
 
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(1);
@@ -100,7 +106,9 @@ describe.skip("GET /episodes", () => {
     });
 
     test("should GET one episode in base of the title", async (done) => {
-      const response = await server.get("/episodes?title=Pilot");
+      const response = await server.get(
+        "/api/episodes?title=Pilot&&key=534d9e33-f4df-4e3c-af0c-f3ec8abccc36"
+      );
 
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(1);
@@ -110,7 +118,9 @@ describe.skip("GET /episodes", () => {
     });
 
     test("should GET one episode in base of productionCode ", async (done) => {
-      const response = await server.get("/episodes?productionCode=2J5002");
+      const response = await server.get(
+        "/api/episodes?productionCode=2J5002&&key=534d9e33-f4df-4e3c-af0c-f3ec8abccc36"
+      );
 
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(1);
@@ -170,7 +180,9 @@ describe.skip("GET /episodes", () => {
     });
 
     test("should GET all seasons", async (done) => {
-      const response = await server.get("/seasons");
+      const response = await server.get(
+        "/api/seasons?key=534d9e33-f4df-4e3c-af0c-f3ec8abccc36"
+      );
 
       expect(response.status).toBe(200);
       expect(response.body.count).toBe(8);
@@ -289,7 +301,9 @@ describe.skip("GET /episodes", () => {
       await db.episode.bulkCreate(episodesTestData);
     });
     test("should GET all episode from one season ", async (done) => {
-      const response = await server.get("/seasons/1/episodes");
+      const response = await server.get(
+        "/api/seasons/1/episodes?key=534d9e33-f4df-4e3c-af0c-f3ec8abccc36"
+      );
 
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(3);
@@ -340,7 +354,9 @@ describe.skip("GET /episodes", () => {
     });
 
     test("should GET all Characters ", async (done) => {
-      const response = await server.get("/characters");
+      const response = await server.get(
+        "/api/characters?key=534d9e33-f4df-4e3c-af0c-f3ec8abccc36"
+      );
 
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(4);
@@ -349,7 +365,9 @@ describe.skip("GET /episodes", () => {
     });
 
     test("should GET all actors ", async (done) => {
-      const response = await server.get("/actors");
+      const response = await server.get(
+        "/api/actors?key=534d9e33-f4df-4e3c-af0c-f3ec8abccc36"
+      );
 
       expect(response.status).toBe(200);
       expect(response.body.length).toBe(4);
