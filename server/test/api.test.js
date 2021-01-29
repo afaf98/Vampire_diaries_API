@@ -151,6 +151,7 @@ describe("api", () => {
       const userTest = {
         email: "afaf.ibrahimi@gmail.com",
         key: "534d9e33-f4df-4e3c-af0c-f3ec8abccc36",
+        count: 0,
       };
       await db.character.bulkCreate(characterTestData);
       await db.season.bulkCreate(seasonsTestData);
@@ -169,7 +170,7 @@ describe("api", () => {
       expect(response.status).toBe(403);
       done();
     });
-    test.only("should accept request with a valid key ", async (done) => {
+    test("should accept request with a valid key ", async (done) => {
       const response = await server.get(
         "/api/episodes?key=534d9e33-f4df-4e3c-af0c-f3ec8abccc36"
       );

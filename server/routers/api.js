@@ -9,11 +9,12 @@ async function apiKeyMidleware(req, res, next) {
   console.log("Key", key);
   delete req.query.key;
   try {
-    const isValid = await user.findOne({ where: { key: key } });
+    const foundUser = await user.findOne({ where: { key: key } });
 
-    if (isValid === null) {
+    if (foundUser === null) {
       return res.status(403).json({ message: "You need a valid key" });
     } else {
+      foundUser.update({ count: foundUser.count + 1 });
       next();
       return true;
     }
