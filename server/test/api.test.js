@@ -158,20 +158,20 @@ describe("api", () => {
       await db.user.create(userTest);
     });
     test("should refuse request without apikey ", async (done) => {
-      const response = await server.get("/episodes");
+      const response = await server.get("/api/episodes");
 
       expect(response.status).toBe(400);
       done();
     });
     test("should refuse request without a valid key ", async (done) => {
-      const response = await server.get("/episodes?key=blabla");
+      const response = await server.get("/api/episodes?key=blabla");
 
       expect(response.status).toBe(403);
       done();
     });
-    test("should accept request with a valid key ", async (done) => {
+    test.only("should accept request with a valid key ", async (done) => {
       const response = await server.get(
-        "/episodes?key=534d9e33-f4df-4e3c-af0c-f3ec8abccc36"
+        "/api/episodes?key=534d9e33-f4df-4e3c-af0c-f3ec8abccc36"
       );
 
       expect(response.status).toBe(200);
