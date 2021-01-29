@@ -4,16 +4,46 @@ const yup = require("yup");
 const validateParams = require("../validation/validationParams");
 const { character, episode, season, user } = require("../models");
 
-async function apiKeyMidleware(req, res, next) {
-  const { key } = req.validatedQuery;
-  console.log("Key", key);
-  delete req.query.key;
-  try {
-    const isValid = await user.findOne({ where: { key: key } });
+let cache = {};
+let timeStart;
+let timeEnd;
 
-    if (isValid === null) {
+setInterval(() => {
+  const keys = Object.keys(cache);
+  const timeStart = new Date().getTime();
+  console.log("Before Room service", cache);
+  keys.forEach((key) => {
+    const differenceTime = timeStart - cache[key];
+    if (differenceTime >= 60000) {
+      delete cache[key];
+    }
+  });
+  console.log("After Room service", cache);
+}, 30000);
+
+async function apiKeyMidleware(req, res, next) {
+  timeStart = new Date().getTime();
+  const { key } = req.validatedQuery;
+  delete req.query.key;
+
+  if (cache[key]) {
+    console.log("Cache hit");
+    const differenceTime = timeStart - cache[key];
+    if (differenceTime <= 10000) {
+      return next();
+    } else {
+      delete cache[key];
+    }
+  }
+  try {
+    const foundUser = await user.findOne({ where: { key: key } });
+
+    if (foundUser === null) {
       return res.status(403).json({ message: "You need a valid key" });
     } else {
+      cache = { ...cache, [key]: new Date().getTime() };
+      //update
+      // foundUser.update({count: foundUser.count + 1})
       next();
       return true;
     }
@@ -60,6 +90,7 @@ apiRoutes.get(
         where: { ...validatedQuery },
         order: [[sortBy, sortOrder]],
       });
+      timeEnd = new Date().getTime();
       res.json(episodes);
     } catch (error) {
       console.error(error);
