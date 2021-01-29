@@ -7,7 +7,12 @@
 - [x] GET /episodes?title=pilot
 - [x] Write proper test for the /episodes route
 - [x] GET /episodes?sortBy=USviewers
-- [ ] Check if the user insert the right query
+- [x] Check if the user insert the right query
+- [x] Install httpie
+- [x] Post request to /user with email
+- [x] Validate email
+- [x] Create table user
+- [x] Insert User
 
 Future ideas
 
