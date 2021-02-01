@@ -12,7 +12,7 @@ describe("GET /episodes", () => {
   describe("query for episode", () => {
     beforeAll(async () => {
       await db.episode.destroy({ truncate: true, cascade: true });
-
+      await db.user.destroy({ truncate: true, cascade: true });
       const episodesTestData = [
         {
           id: 1,
@@ -67,7 +67,12 @@ describe("GET /episodes", () => {
           updatedAt: "2021-01-20T15:48:56.651Z",
         },
       ];
-
+      const userTest = {
+        email: "afaf.ibrahimi@gmail.com",
+        key: "534d9e33-f4df-4e3c-af0c-f3ec8abccc36",
+        count: 0,
+      };
+      await db.user.create(userTest);
       await db.episode.bulkCreate(episodesTestData);
     });
 
@@ -133,6 +138,8 @@ describe("GET /episodes", () => {
   describe("query seasons", () => {
     beforeAll(async () => {
       await db.season.destroy({ truncate: true, cascade: true });
+      await db.episode.destroy({ truncate: true, cascade: true });
+      await db.user.destroy({ truncate: true, cascade: true });
 
       const seasonsTestData = [
         {
@@ -176,7 +183,13 @@ describe("GET /episodes", () => {
           updatedAt: "2021-01-20T15:48:56.599Z",
         },
       ];
+      const userTest = {
+        email: "afaf.ibrahimi@gmail.com",
+        key: "534d9e33-f4df-4e3c-af0c-f3ec8abccc36",
+        count: 0,
+      };
       await db.season.bulkCreate(seasonsTestData);
+      await db.user.create(userTest);
     });
 
     test("should GET all seasons", async (done) => {
@@ -195,6 +208,8 @@ describe("GET /episodes", () => {
     beforeAll(async () => {
       await db.episode.destroy({ truncate: true, cascade: true });
       await db.season.destroy({ truncate: true, cascade: true });
+      await db.episode.destroy({ truncate: true, cascade: true });
+      await db.user.destroy({ truncate: true, cascade: true });
 
       const episodesTestData = [
         {
@@ -297,6 +312,12 @@ describe("GET /episodes", () => {
           updatedAt: "2021-01-20T15:48:56.599Z",
         },
       ];
+      const userTest = {
+        email: "afaf.ibrahimi@gmail.com",
+        key: "534d9e33-f4df-4e3c-af0c-f3ec8abccc36",
+        count: 0,
+      };
+      await db.user.create(userTest);
       await db.season.bulkCreate(seasonsTestData);
       await db.episode.bulkCreate(episodesTestData);
     });
@@ -315,6 +336,8 @@ describe("GET /episodes", () => {
   describe("queries characters", () => {
     beforeAll(async () => {
       await db.character.destroy({ truncate: true, cascade: true });
+      await db.episode.destroy({ truncate: true, cascade: true });
+      await db.user.destroy({ truncate: true, cascade: true });
 
       const characterTestData = [
         {
@@ -350,6 +373,12 @@ describe("GET /episodes", () => {
           updatedAt: new Date(),
         },
       ];
+      const userTest = {
+        email: "afaf.ibrahimi@gmail.com",
+        key: "534d9e33-f4df-4e3c-af0c-f3ec8abccc36",
+        count: 0,
+      };
+      await db.user.create(userTest);
       await db.character.bulkCreate(characterTestData);
     });
 

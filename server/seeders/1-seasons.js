@@ -9,7 +9,6 @@ module.exports = {
         updatedAt: new Date(),
       };
     });
-    console.log("seasons", allSeasons);
 
     await queryInterface.bulkInsert("seasons", allSeasons, {});
   },

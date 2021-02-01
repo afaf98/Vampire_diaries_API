@@ -6,7 +6,6 @@ const { character, episode, season, user } = require("../models");
 
 async function apiKeyMidleware(req, res, next) {
   const { key } = req.validatedQuery;
-  console.log("Key", key);
   delete req.query.key;
   try {
     const foundUser = await user.findOne({ where: { key: key } });
