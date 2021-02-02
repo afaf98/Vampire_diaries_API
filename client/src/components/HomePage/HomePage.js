@@ -4,8 +4,10 @@ import FormControl from "react-bootstrap/FormControl";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Container from "react-bootstrap/Container";
 import "./HomePage.scss";
+import Search from "../../request/fecthing";
 
 export default function HomePage() {
+  Search();
   return (
     <div>
       <Jumbotron fluid>
