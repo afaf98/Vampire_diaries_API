@@ -17,10 +17,14 @@ export default function HomePage() {
       <InputGroup className="mb-3">
         <InputGroup.Prepend>
           <InputGroup.Text id="basic-addon3">
-            https://example.com/users/
+            https://vampire-diaries.herokuapp.com/
           </InputGroup.Text>
         </InputGroup.Prepend>
-        <FormControl id="basic-url" aria-describedby="basic-addon3" />
+        <FormControl
+          id="basic-url"
+          aria-describedby="basic-addon3"
+          placeholder="/seasons"
+        />
       </InputGroup>
     </div>
   );
