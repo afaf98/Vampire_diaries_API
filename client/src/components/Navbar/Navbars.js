@@ -17,13 +17,13 @@ export default function Navbars() {
       <Navbar.Brand>
         <BsBullseye />
       </Navbar.Brand>
-      <Nav.Link as={Link} to="/">
+      <Nav.Link as={Link} className="text-white" to="/">
         Home
       </Nav.Link>
-      <Nav.Link as={Link} to="/documentation">
+      <Nav.Link as={Link} className="text-white" to="/documentation">
         Documentation
       </Nav.Link>
-      <Nav.Link as={Link} to="/about">
+      <Nav.Link as={Link} className="text-white" to="/about">
         About
       </Nav.Link>
     </Navbar>
