@@ -1,6 +1,6 @@
 import "./App.scss";
 import { Switch, Route } from "react-router-dom";
-import HomePage from "./components/HomePage";
+import HomePage from "./components/HomePage/HomePage";
 import About from "./components/About";
 import Documentation from "./components/Documentation";
 import Navbars from "./components/Navbar/Navbars";
