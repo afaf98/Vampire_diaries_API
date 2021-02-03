@@ -9,6 +9,7 @@ const { user } = require("./models");
 const sendEmail = require("./sendEmail");
 const apiRoutes = require("./routers/api");
 
+app.use(cors());
 app.use(express.json());
 
 app.post(
@@ -43,6 +44,5 @@ app.post(
   }
 );
 
-app.use(cors());
 app.use("/api", apiRoutes);
 module.exports = app;
