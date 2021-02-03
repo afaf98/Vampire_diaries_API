@@ -10,6 +10,7 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Spinner from "react-bootstrap/Spinner";
 import "./HomePage.scss";
 import Search from "../../services/fecthing";
 import requestApiKey from "../../services/requestApiKey";
@@ -20,12 +21,30 @@ const schema = yup.object().shape({
 
 export default function HomePage() {
   const [url, setUrl] = useState("seasons");
+  const [keyRequestedStatus, setKeyRequestedStatus] = useState("idle");
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (email) => requestApiKey(email);
+  //idle
+  //Submit -> processing (hide/disable button)
+  //success -> Show Check your email
+  //failed -> Ops something went wrong!/Already have a key
 
+  const onSubmit = async (email) => {
+    setKeyRequestedStatus("processing");
+    await new Promise((resolve) => {
+      setTimeout(resolve, 2000);
+    });
+    const response = await requestApiKey(email);
+    if (!response.succes) {
+      setKeyRequestedStatus("failed");
+    } else {
+      setKeyRequestedStatus("success");
+    }
+    console.log("Response", response);
+  };
+  console.log("Status", keyRequestedStatus);
   useEffect(() => {
     Search(url);
   }, [url]);
@@ -73,8 +92,25 @@ export default function HomePage() {
               <ErrorMessage errors={errors} name="email" />
             </Form.Control.Feedback>
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
+          <Button
+            variant="primary"
+            type="submit"
+            disabled={keyRequestedStatus === "processing"}
+          >
+            {keyRequestedStatus === "processing" ? (
+              <>
+                <Spinner
+                  as="span"
+                  animation="grow"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                Loading...
+              </>
+            ) : (
+              "Submit"
+            )}
           </Button>
         </Form>
       </Container>
