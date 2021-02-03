@@ -1,3 +1,15 @@
 .text-align {
   text-align: center;
 }
+.apikey-container {
+  background-color: #e9ecef;
+  height: 25vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 8px;
+}
+
+.apikey-form {
+  width: 70vw;
+}
