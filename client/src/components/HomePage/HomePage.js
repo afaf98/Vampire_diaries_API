@@ -11,6 +11,9 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+
 import "./HomePage.scss";
 import Search from "../../services/fecthing";
 import requestApiKey from "../../services/requestApiKey";
@@ -19,8 +22,14 @@ const schema = yup.object().shape({
   email: yup.string().email().required(),
 });
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 export default function HomePage() {
-  const [url, setUrl] = useState("seasons");
+  const [url, setUrl] = useState(BASE_URL + `/api`);
+  const [apiKey, setApiKey] = useState(localStorage.getItem("apiKey"));
+  const [query, setQuery] = useState("");
+  const [route, setRoute] = useState("");
+
   const [keyRequestedStatus, setKeyRequestedStatus] = useState("idle");
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema),
@@ -44,10 +53,20 @@ export default function HomePage() {
     }
     console.log("Response", response);
   };
-  console.log("Status", keyRequestedStatus);
-  useEffect(() => {
-    Search(url);
-  }, [url]);
+  function handleApiKeyInput(e) {
+    setApiKey(e.target.value);
+    localStorage.setItem("apiKey", e.target.value);
+  }
+
+  async function SearchUrl(route, apiKey, query) {
+    console.log("The URL", `${BASE_URL}/api/${route}?key=${apiKey}${query}`);
+    const newUrl = `${BASE_URL}/api${route}?key=${apiKey}${query}`;
+    setUrl(newUrl);
+    const response = await Search(newUrl);
+    console.log("Response", response);
+    //534d9e33-f4df-4e3c-af0c-f3ec8abccc36
+  }
+
   return (
     <div>
       <Jumbotron fluid>
@@ -56,20 +75,64 @@ export default function HomePage() {
           <p className="text-align">Your favoirite seires in an API</p>
         </Container>
       </Jumbotron>
-      <InputGroup className="mb-3">
-        <InputGroup.Prepend>
-          <InputGroup.Text id="basic-addon3">
-            https://vampire-diaries.herokuapp.com/
+      <Form>
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon3" className="url-inputField">
+            {url}
           </InputGroup.Text>
-        </InputGroup.Prepend>
-        <FormControl
-          id="basic-url"
-          aria-describedby="basic-addon3"
-          placeholder="/seasons"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-        />
-      </InputGroup>
+          <Button
+            onClick={() => {
+              SearchUrl(route, apiKey, query);
+            }}
+          >
+            Explore!
+          </Button>
+        </InputGroup>
+        <Form.Group as={Row}>
+          <Form.Label column sm="2">
+            Your Key :
+          </Form.Label>
+          <Col sm="10">
+            <Form.Control
+              type="text"
+              placeholder="Insert your key here!"
+              value={apiKey}
+              onChange={handleApiKeyInput}
+            />
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row}>
+          <Form.Label column sm="2">
+            Route :
+          </Form.Label>
+          <Col sm="10">
+            <Form.Control
+              type="text"
+              placeholder="Insert your key here!"
+              value={route}
+              onChange={(e) => {
+                setRoute(e.target.value);
+              }}
+            />
+          </Col>
+        </Form.Group>
+        <Form.Group as={Row}>
+          <Form.Label column sm="2">
+            Query :
+          </Form.Label>
+          <Col sm="10">
+            <Form.Control
+              type="text"
+              placeholder="/seasons"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
+            />
+          </Col>
+        </Form.Group>
+      </Form>
+
       <Container className="apikey-container">
         <Form
           onSubmit={handleSubmit(onSubmit)}
