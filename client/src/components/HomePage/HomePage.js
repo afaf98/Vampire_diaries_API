@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "@hookform/error-message";
 import * as yup from "yup";
 
 import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
@@ -13,6 +12,7 @@ import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Card from "react-bootstrap/Card";
 
 import "./HomePage.scss";
 import Search from "../../services/fecthing";
@@ -25,11 +25,12 @@ const schema = yup.object().shape({
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function HomePage() {
+  const [json, setJson] = useState();
   const [url, setUrl] = useState(BASE_URL + `/api`);
   const [apiKey, setApiKey] = useState(localStorage.getItem("apiKey"));
   const [query, setQuery] = useState("");
   const [route, setRoute] = useState("");
-
+  const [resStatus, setResStatus] = useState("");
   const [keyRequestedStatus, setKeyRequestedStatus] = useState("idle");
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema),
@@ -46,13 +47,16 @@ export default function HomePage() {
       setTimeout(resolve, 2000);
     });
     const response = await requestApiKey(email);
-    if (!response.succes) {
+    if (!response.success) {
       setKeyRequestedStatus("failed");
+      setResStatus(response.message);
     } else {
       setKeyRequestedStatus("success");
+      setResStatus(response.message);
     }
     console.log("Response", response);
   };
+  console.log("Check apikey request", keyRequestedStatus);
   function handleApiKeyInput(e) {
     setApiKey(e.target.value);
     localStorage.setItem("apiKey", e.target.value);
@@ -63,16 +67,18 @@ export default function HomePage() {
     const newUrl = `${BASE_URL}/api${route}?key=${apiKey}${query}`;
     setUrl(newUrl);
     const response = await Search(newUrl);
-    console.log("Response", response);
+    setJson(JSON.stringify(response, null, 4));
+
     //534d9e33-f4df-4e3c-af0c-f3ec8abccc36
   }
+  console.log("Response", json);
 
   return (
     <div>
       <Jumbotron fluid>
-        <Container>
+        <Container className="rounded-2">
           <h1 className="text-align">The Vampire Diaries API</h1>
-          <p className="text-align">Your favoirite seires in an API</p>
+          <p className="text-align">Your favorite series in an API</p>
         </Container>
       </Jumbotron>
       <Form>
@@ -131,9 +137,31 @@ export default function HomePage() {
             />
           </Col>
         </Form.Group>
+        <Form.Group as={Row}>
+          <Col>
+            <Container className="pre-container">
+              <Form.Label column sm="2">
+                Data :
+              </Form.Label>
+              <Form.Control
+                as="textarea"
+                className="textareaExample data-displayed"
+                rows={16}
+                value={json}
+                readOnly
+              ></Form.Control>
+            </Container>
+          </Col>
+        </Form.Group>
       </Form>
 
-      <Container className="apikey-container">
+      <Container
+        className={
+          keyRequestedStatus === "success" || keyRequestedStatus === "failed"
+            ? "display-none"
+            : "apikey-container"
+        }
+      >
         <Form
           onSubmit={handleSubmit(onSubmit)}
           noValidate
@@ -177,6 +205,28 @@ export default function HomePage() {
           </Button>
         </Form>
       </Container>
+      <Card
+        className={
+          keyRequestedStatus === "success" || keyRequestedStatus === "failed"
+            ? "visible apikey-response-success"
+            : "invisible"
+        }
+      >
+        <Card.Header
+          as="h5"
+          className={
+            keyRequestedStatus === "success"
+              ? "header-success"
+              : "header-failed"
+          }
+        >
+          {keyRequestedStatus === "success" ? "Success" : "Failed"}
+        </Card.Header>
+        <Card.Body>
+          {/* <Card.Title>Check your email!</Card.Title> */}
+          <Card.Text>{resStatus}</Card.Text>
+        </Card.Body>
+      </Card>
     </div>
   );
 }
