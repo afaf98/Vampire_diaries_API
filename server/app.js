@@ -45,4 +45,13 @@ app.post(
 );
 
 app.use("/api", apiRoutes);
+
+app.use((req, res) => {
+  console.log("Req", req.path);
+  res.status(404).json({
+    message: "Not Found!",
+    errors: [`Route ${req.path} does not exist!`],
+  });
+});
+
 module.exports = app;

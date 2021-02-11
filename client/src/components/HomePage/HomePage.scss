@@ -17,14 +17,14 @@
 
 .pre-container {
   background-color: #e9ecef;
-  height: 60vh;
+  height: 70vh !important;
   margin-bottom: 20px;
   width: 100%;
   border-radius: 8px;
 }
 
 .data-displayed {
-  margin-top: 40px;
+  margin-top: 10px;
   width: 100%;
   height: 100%;
 }
@@ -49,4 +49,16 @@
 
 .display-none {
   display: none;
+}
+
+.color_red {
+  color: red;
+}
+
+.color_green {
+  color: lightgreen;
+}
+
+.bold {
+  font-weight: bold;
 }
