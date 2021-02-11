@@ -17,7 +17,7 @@ export default function Explorer() {
   const [apiKey, setApiKey] = useState(localStorage.getItem("apiKey"));
   const [query, setQuery] = useState("");
   const [route, setRoute] = useState("");
-  const { statusCode, status, message, data } = useSearch({
+  const { statusCode, status, data } = useSearch({
     url,
   });
 
@@ -29,8 +29,6 @@ export default function Explorer() {
   function updateUrl(route, apiKey, query) {
     const newUrl = `${BASE_URL}/api${route}?key=${apiKey}${query}`;
     setUrl(newUrl);
-
-    //534d9e33-f4df-4e3c-af0c-f3ec8abccc36
   }
 
   return (
@@ -102,14 +100,14 @@ export default function Explorer() {
                 >
                   {status}
                 </h4>
-                <p className="bold">
+                <span className="bold">
                   Status Code:
                   <h4
                     className={statusCode === 200 ? "color_green" : "color_red"}
                   >
                     {statusCode}
                   </h4>
-                </p>
+                </span>
               </Form.Label>
               <Form.Control
                 as="textarea"
