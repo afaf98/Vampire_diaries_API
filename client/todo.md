@@ -5,7 +5,7 @@
 
 //Future ideas
 
-- [ ] Interactive explorer
+- [X] Interactive explorer
 - [ ] Dummy explorer
 - [ ] Display from api explorer and from dummy explorer
 
