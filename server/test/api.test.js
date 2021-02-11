@@ -178,5 +178,15 @@ describe("api", () => {
       expect(response.status).toBe(200);
       done();
     });
+    test("should response 404 when the route does not exist", async (done) => {
+      const response = await server.get("/bla");
+
+      expect(response.status).toBe(404);
+      expect(response.body).toEqual({
+        message: "Not Found!",
+        errors: ["Route /bla does not exist!"],
+      });
+      done();
+    });
   });
 });

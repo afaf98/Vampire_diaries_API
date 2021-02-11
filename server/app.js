@@ -9,6 +9,7 @@ const { user } = require("./models");
 const sendEmail = require("./sendEmail");
 const apiRoutes = require("./routers/api");
 
+app.use(cors());
 app.use(express.json());
 
 app.post(
@@ -43,6 +44,14 @@ app.post(
   }
 );
 
-app.use(cors());
 app.use("/api", apiRoutes);
+
+app.use((req, res) => {
+  console.log("Req", req.path);
+  res.status(404).json({
+    message: "Not Found!",
+    errors: [`Route ${req.path} does not exist!`],
+  });
+});
+
 module.exports = app;

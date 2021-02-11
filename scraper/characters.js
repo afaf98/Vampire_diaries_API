@@ -50,7 +50,6 @@ function getActors(tableCharacters) {
       if (actorName.includes("[")) {
         actorName = actorName.substring(0, actorName.length - 3);
       }
-      //   console.log("3 rows", characters, actorName, actorRowSpan);
       row = {
         character: characters,
         actor: actorName,
