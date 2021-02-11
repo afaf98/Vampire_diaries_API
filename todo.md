@@ -14,6 +14,7 @@
 - [x] Create table user
 - [x] Insert User
 - [X] MAKE SURE THE TEST WORKS
+- [X] Deploy
 
 Future ideas
 
