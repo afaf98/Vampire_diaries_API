@@ -5,10 +5,11 @@ import About from "./components/About";
 import Documentation from "./components/Documentation";
 import Navbars from "./components/Navbar/Navbars";
 import Container from "react-bootstrap/Container";
+import { ApiKeyProvider } from "./context/ApiKeyContext";
 
 function App() {
   return (
-    <main>
+    <ApiKeyProvider>
       <Navbars />
       <Container className="mt-6">
         <Switch>
@@ -23,7 +24,7 @@ function App() {
           </Route>
         </Switch>
       </Container>
-    </main>
+    </ApiKeyProvider>
   );
 }
 
