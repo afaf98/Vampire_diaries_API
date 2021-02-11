@@ -17,8 +17,7 @@ export default function useSearch({ url }) {
     });
 
     async function get() {
-      const { response, status, message } = await Search(url);
-      console.log("Search", response, response.statusText);
+      const { response, status } = await Search(url);
       setSearchResult({
         status: status,
         statusCode: response.status,

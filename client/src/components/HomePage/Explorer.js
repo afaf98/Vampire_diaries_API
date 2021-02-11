@@ -7,22 +7,26 @@ import Col from "react-bootstrap/Col";
 import InputGroup from "react-bootstrap/InputGroup";
 import Container from "react-bootstrap/Container";
 import useSearch from "../../hooks/useSearch";
+import useApiKey from "../../context/ApiKeyContext";
 
 import "./HomePage.scss";
 
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function Explorer() {
+  const api = useApiKey();
+  console.log("What is api", api);
   const [url, setUrl] = useState(BASE_URL + `/api`);
-  const [apiKey, setApiKey] = useState(localStorage.getItem("apiKey"));
+  // const [apiKey, setApiKey] = useState(localStorage.getItem("apiKey"));
   const [query, setQuery] = useState("");
   const [route, setRoute] = useState("");
+
   const { statusCode, status, data } = useSearch({
     url,
   });
 
   function handleApiKeyInput(e) {
-    setApiKey(e.target.value);
+    api.setApiKey(e.target.value);
     localStorage.setItem("apiKey", e.target.value);
   }
 
@@ -40,7 +44,7 @@ export default function Explorer() {
           </InputGroup.Text>
           <Button
             onClick={() => {
-              updateUrl(route, apiKey, query);
+              updateUrl(route, api.apiKey, query);
             }}
           >
             Explore!
@@ -54,7 +58,7 @@ export default function Explorer() {
             <Form.Control
               type="text"
               placeholder="Insert your key here!"
-              value={apiKey}
+              value={api.apiKey}
               onChange={handleApiKeyInput}
             />
           </Col>
