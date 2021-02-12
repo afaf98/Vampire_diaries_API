@@ -9,8 +9,8 @@ export default function HomePage() {
   return (
     <div>
       <Header />
-      <Explorer />
       <ApiKeyForm />
+      <Explorer />
     </div>
   );
 }
