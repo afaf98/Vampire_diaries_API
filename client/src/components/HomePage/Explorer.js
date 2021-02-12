@@ -17,7 +17,6 @@ export default function Explorer() {
   const api = useApiKey();
   console.log("What is api", api);
   const [url, setUrl] = useState(BASE_URL + `/api`);
-  // const [apiKey, setApiKey] = useState(localStorage.getItem("apiKey"));
   const [query, setQuery] = useState("");
   const [route, setRoute] = useState("");
 
