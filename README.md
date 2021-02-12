@@ -1,11 +1,12 @@
-# The Vampire diaries API
+# The Vampire Diaries API 🧛
 
 The Vampire Diaries API permits you to collect data from the famous series,
 like the seasons, episodes and character that are present in it.
 
-## [Request an Apikey and explore the API here (Vampire emoji)](Netlify)
+## [🧛 Request an Apikey and explore the API here 🧛 ](https://vampire-diaries-api.netlify.app/)
 
-- This is the base Url (You need an ApiKey first!)-> [heroku](heroku)
+- This is the base Url (You need an ApiKey first!)
+  - [https://vampire-diaries.herokuapp.com/api](https://vampire-diaries.herokuapp.com/api/)
 
 ### Table of contents
 
@@ -64,4 +65,10 @@ This repository contains how the database is structured and the end to end test 
 - ### /api/seasons/:seasonId/episodes?key=[YOUR API Key]
   - This route allow you to find all the episodes of a specific season
 - ### /api/actors?key=[YOUR API Key]
+
   - This route allows you to fetch just the actors present in this series
+
+  ## Author
+
+  - Afaf Ibrahimi
+  - [https://github.com/afaf98](https://github.com/afaf98)
