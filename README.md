@@ -1,3 +1,27 @@
+- Goals
+  - Public api
+  - Learning goals
+  - Scrape & Normalize data
+  - Build a rest api w. database
+  - e2e test rest api
+  - validate incoming requests
+  - sending emails
+  - simple react
+  - custom hook & context
+  - Bootstrap
+  - Continuous integration / Continuous deployment 
+  - Github actions run e2e tests
+  - Heroku auto deploy / Netlify auto deploy
+  - Main / Dev / Feature git flow
+-  Api Docs 
+  - Send them to the explorer
+  - Request a key
+  - Routes & params
+  - Status
+- Roadmap
+  - What is next? -> board
+- Additional resources (wireframe, db, board)
+- Author
 # The Vampire Diaries API 🧛
 
 The Vampire Diaries API permits you to collect data from the famous series,
@@ -13,6 +37,7 @@ like the seasons, episodes and character that are present in it.
 - [Scraper repo](#Scraper-repo)
 - [Frontend repo](#Frontend-repo)
 - [Backend repo](#Backend-repo)
+- [Goals](#Goals)
 - [User Stories](#User-Stories)
 - [Api Docs](#Api-Docs)
 
@@ -34,6 +59,64 @@ You may also request one in the form at the end of the page
 This repository contains how the database is structured and the end to end test created to make sure that the App is working properly even with changes.
 
 - [Backend repo](https://github.com/afaf98/Vampire_diaries_API/tree/development/server)
+
+
+# Goals
+
+The main Goal of this project was to create an open source api that allow you to collect data from a specific TV show that is called The Vampire Diaries.
+
+
+# The learning goals in this project are the following :
+
+ - ## Scrape & Normalize data
+
+  All the data in this API has been scraped from a website.
+  That allowed us to create a good amount of data to build this project. 
+
+  - [Scraper Folder](https://github.com/afaf98/Vampire_diaries_API/tree/development/scraper)
+ 
+ - ## Build a rest API with database
+
+To accomplish our aim we've start building a Rest API, by creating different databases (Development/Testing/Production) with Sequelize and Postgres.
+All the releations of the tables has been defined and implemented.
+It has been implemented an Express server that allowed us to create different routes by following the Rest rules. 
+
+  - [Server Folder](https://github.com/afaf98/Vampire_diaries_API/tree/development/server)
+
+  - ## End to end test rest api
+
+To make sure our app works and keeps working in the proper way, we've implemented a testing section.
+For the testing we've installed Supertest and Jest, that allowed us to create end to end testing.
+
+  - [Testing files](https://github.com/afaf98/Vampire_diaries_API/tree/development/server/test)
+
+  -  ## Validate incoming requests
+
+  Each request has been validated by using a library [Yup](https://www.npmjs.com/package/yup).
+  Validation was an important step to make sure that the app works properly and to give a the right feedback to the user.
+
+  - [Validation example](https://github.com/afaf98/Vampire_diaries_API/tree/development/server/validation)
+
+  
+  - ## Sending emails
+
+Our API requires an Api Key, that allows the user to use all the routes available.
+To request a key we've created an POST request that sends an email to the new User with the personal key.
+For this functionality we've used [SendGrip](https://www.npmjs.com/package/@sendgrid/mail)
+
+- [Example sending email](https://github.com/afaf98/Vampire_diaries_API/blob/1ae705c6d2c636874eefbffae34232d615f795a2/server/sendEmail.js)
+
+## Simple React-App
+
+To build our frontend we've decided to use React app that allowed us to create different components and build a simple app.
+
+For the styling we've decided to use a [Bootstrap](https://getbootstrap.com/) with some customization applied with CSS
+  - custom hook & context
+  - Bootstrap
+  - Continuous integration / Continuous deployment 
+  - Github actions run e2e tests
+  - Heroku auto deploy / Netlify auto deploy
+  - Main / Dev / Feature git flow
 
 ### User Stories
 

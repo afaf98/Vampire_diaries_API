@@ -15,10 +15,11 @@ const BASE_URL = process.env.REACT_APP_API_URL;
 
 export default function Explorer() {
   const api = useApiKey();
-  console.log("What is api", api);
-  const [url, setUrl] = useState(BASE_URL + `/api`);
-  const [query, setQuery] = useState("");
-  const [route, setRoute] = useState("");
+  const [query, setQuery] = useState("&sortBy=USviewers&sortOrder=DESC");
+  const [route, setRoute] = useState("/episodes");
+  const [url, setUrl] = useState(
+    BASE_URL + `/api${route}?key=${api.apiKey}${query}`
+  );
 
   const { statusCode, status, data } = useSearch({
     url,
@@ -27,6 +28,7 @@ export default function Explorer() {
   function handleApiKeyInput(e) {
     api.setApiKey(e.target.value);
     localStorage.setItem("apiKey", e.target.value);
+    updateUrl(route, e.target.value, query);
   }
 
   function updateUrl(route, apiKey, query) {
@@ -42,6 +44,7 @@ export default function Explorer() {
             {url}
           </InputGroup.Text>
           <Button
+            disabled={!Boolean(api.apiKey)}
             onClick={() => {
               updateUrl(route, api.apiKey, query);
             }}
@@ -69,7 +72,7 @@ export default function Explorer() {
           <Col sm="10">
             <Form.Control
               type="text"
-              placeholder="Insert your key here!"
+              placeholder="/seasons /episodes /actors"
               value={route}
               onChange={(e) => {
                 setRoute(e.target.value);
@@ -84,7 +87,7 @@ export default function Explorer() {
           <Col sm="10">
             <Form.Control
               type="text"
-              placeholder="/seasons"
+              placeholder="&sortOrder=DESC"
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value);
@@ -95,31 +98,38 @@ export default function Explorer() {
 
         <Form.Group as={Row}>
           <Col>
-            <Container className="pre-container">
-              <Form.Label column sm="2">
-                <p className="bold">Data:</p>
-                <h4
-                  className={status === "Success" ? "color_green" : "color_red"}
-                >
-                  {status}
-                </h4>
-                <span className="bold">
-                  Status Code:
+            {api.apiKey && (
+              <Container className="pre-container">
+                <Form.Label column sm="2">
+                  <p className="bold">Data:</p>
+
                   <h4
-                    className={statusCode === 200 ? "color_green" : "color_red"}
+                    className={
+                      status === "Success" ? "color_green" : "color_red"
+                    }
                   >
-                    {statusCode}
+                    {status}
                   </h4>
-                </span>
-              </Form.Label>
-              <Form.Control
-                as="textarea"
-                className="textareaExample data-displayed"
-                rows={16}
-                value={JSON.stringify(data, null, 4)}
-                readOnly
-              ></Form.Control>
-            </Container>
+                  <span className="bold">
+                    Status Code:
+                    <h4
+                      className={
+                        statusCode === 200 ? "color_green" : "color_red"
+                      }
+                    >
+                      {statusCode}
+                    </h4>
+                  </span>
+                </Form.Label>
+                <Form.Control
+                  as="textarea"
+                  className="textareaExample data-displayed"
+                  rows={16}
+                  value={JSON.stringify(data, null, 4)}
+                  readOnly
+                ></Form.Control>
+              </Container>
+            )}
           </Col>
         </Form.Group>
       </Form>
