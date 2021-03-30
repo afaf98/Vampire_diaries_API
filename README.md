@@ -1,27 +1,3 @@
-- Goals
-  - Public api
-  - Learning goals
-  - Scrape & Normalize data
-  - Build a rest api w. database
-  - e2e test rest api
-  - validate incoming requests
-  - sending emails
-  - simple react
-  - custom hook & context
-  - Bootstrap
-  - Continuous integration / Continuous deployment 
-  - Github actions run e2e tests
-  - Heroku auto deploy / Netlify auto deploy
-  - Main / Dev / Feature git flow
--  Api Docs 
-  - Send them to the explorer
-  - Request a key
-  - Routes & params
-  - Status
-- Roadmap
-  - What is next? -> board
-- Additional resources (wireframe, db, board)
-- Author
 # The Vampire Diaries API 🧛
 
 The Vampire Diaries API permits you to collect data from the famous series,
