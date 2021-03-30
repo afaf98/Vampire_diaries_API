@@ -23,9 +23,6 @@ export default function Navbars() {
       <Nav.Link as={Link} className="text-white" to="/documentation">
         Documentation
       </Nav.Link>
-      <Nav.Link as={Link} className="text-white" to="/about">
-        About
-      </Nav.Link>
     </Navbar>
   );
 }
